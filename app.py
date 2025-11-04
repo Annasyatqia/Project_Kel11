@@ -66,7 +66,7 @@ if page == "Tren Nasional":
     st.header("📊 Tren Nasional Akses Air Bersih")
     st.markdown("""
     Halaman ini menampilkan tren historis akses air bersih berdasarkan data nasional dan prediksi 5 tahun ke depan.  
-    Anda bisa upload file CSV sendiri (misalnya, `df_year.csv` dengan kolom 'tahun' dan 'akses_air_bersih').  
+    Anda bisa upload file CSV sendiri (misalnya, `df_year.csv` dengan kolom 'tahun' dan 'air_bersih').  
     Ini mendukung pemantauan **SDG 6.1** (target 100% akses air minum) dan **SDG 6.4** (pengelolaan air berkelanjutan).
     """)
 
@@ -75,8 +75,8 @@ if page == "Tren Nasional":
     if uploaded_file is not None:
         with st.spinner("Memproses data CSV..."):
             df_year = pd.read_csv(uploaded_file)
-            if 'tahun' not in df_year.columns or 'akses_air_bersih' not in df_year.columns:
-                st.error("File CSV harus memiliki kolom 'tahun' dan 'akses_air_bersih'.")
+            if 'tahun' not in df_year.columns or 'air_bersih' not in df_year.columns:
+                st.error("File CSV harus memiliki kolom 'tahun' dan 'air_bersih'.")
             else:
                 st.success("Data berhasil di-upload!")
                 st.write("📋 **Preview Data:**")
@@ -85,7 +85,7 @@ if page == "Tren Nasional":
                 # Tren Historis
                 st.subheader("📈 Tren Historis")
                 fig, ax = plt.subplots(figsize=(10, 5))
-                ax.plot(df_year['tahun'], df_year['akses_air_bersih'], marker='o', color="#56CCF2")
+                ax.plot(df_year['tahun'], df_year['air_bersih'], marker='o', color="#56CCF2")
                 ax.set_title("Tren Akses Air Bersih Nasional")
                 ax.set_xlabel("Tahun")
                 ax.set_ylabel("Persentase Akses Air Bersih (%)")
@@ -108,7 +108,7 @@ if page == "Tren Nasional":
                     predictions = [pred_current + (i * 2) for i in range(6)]  # Peningkatan 2% per tahun
                     
                     fig2, ax2 = plt.subplots(figsize=(10, 5))
-                    ax2.plot(df_year['tahun'], df_year['akses_air_bersih'], marker='o', label="Historis", color="#56CCF2")
+                    ax2.plot(df_year['tahun'], df_year['air_bersih'], marker='o', label="Historis", color="#56CCF2")
                     ax2.plot(future_years, predictions[1:], marker='x', linestyle='--', label="Prediksi", color="#FF6B6B")
                     ax2.set_title("Prediksi Akses Air Bersih 5 Tahun ke Depan")
                     ax2.set_xlabel("Tahun")
@@ -119,7 +119,7 @@ if page == "Tren Nasional":
 
                     # Pemantauan SDG
                     st.subheader("🌍 Pemantauan SDG 6.1 & 6.4")
-                    current_access = df_year['akses_air_bersih'].iloc[-1]
+                    current_access = df_year['air_bersih'].iloc[-1]
                     if current_access >= 100:
                         st.success("✅ SDG 6.1: Target akses air minum tercapai.")
                     else:
